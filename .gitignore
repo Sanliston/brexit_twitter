@@ -1,0 +1,2 @@
+#ignore api configs
+web/background_tasks/twitter_api/api_config.json
