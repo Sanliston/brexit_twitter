@@ -58,17 +58,26 @@
         }
 
         public function getAllTweets($limit=50){
+
+            $limit = $limit*2;
             
             $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ".$limit.") sub ORDER BY id ASC");
-            $result = $statement->execute();
+            $statement->execute();
+            $result = $statement->get_result();
             $statement->close();
 
-            if($result->num_rows == 0){
-                echo "Tweet already exists";
-                return false;
-            }else{
-                return $result;
+            $all_tweets = array();
+            while($row = $result->fetch_array(MYSQLI_NUM)){
+
+                $result_array = $result->fetch_assoc();
+                //print_r($result_array);
+                array_push($all_tweets, $result_array);
             }
+
+            print_r($all_tweets);
+
+            $count = count($all_tweets);
+            echo "Total number of tweets = ".$count;
         }
 
         public function createTweet($tweet_id, $username, $text, $created_at, $sentiment){
