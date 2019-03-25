@@ -12,9 +12,9 @@
         private $request_method = "GET";
         private $url = "https://api.twitter.com/1.1/search/tweets.json";
 
-        function __construct($search_query, $since_id = null, $geocode = null ){
+        function __construct($search_query, $count, $lang, $since_id = null, $geocode = null ){
 
-            $this->get_field = $this->get_field."q=".$search_keywords;
+            $this->get_field = $this->get_field."q=".$search_query."&count=".$count."&lang=".$lang."&tweet_mode=extended&exclude=retweets";
 
             if($since_id){
                 $this->get_field = $this->get_field."&since_id=".$since_id;
@@ -24,11 +24,11 @@
                 $this->get_field = $this->get_field."&geocode=".$geocode;
             }
 
-            configureAPI();
+            $this->configureAPI();
         }
 
         private function configureAPI(){
-            $config = file_get_contents($_SERVER['DOCUMENT_ROOT']."/web/api/background_tasks/twitter_api/api_config.json");
+            $config = file_get_contents("api_config.json");
             $config = json_decode($config, true);
 
             $this->access_token = $config['access_token'];
@@ -47,13 +47,19 @@
             );
 
             $call = new TwitterAPIExchange($parameters);
-            $response = $call->setGetfield($this->get_field)
-                             ->buildOauth($this->url, $this->request_method)
-                             ->performRequest();
+            $response = json_decode(
+                            $call->setGetfield($this->get_field)
+                                ->buildOauth($this->url, $this->request_method)
+                                ->performRequest()
+                            ,$assoc=TRUE
+                        );
 
-            echo $response;
+            return $response["statuses"];
         }
 
 
     }
+
+    $twitter_api = new TwitterAPI("brexit", 100, "en");
+    $tweets_array = $twitter_api->makeCall();
 ?>
