@@ -7,6 +7,8 @@
 
     $model = new TweetsModel();
     $tweets = $model->getAllTweets(100);
+    $tweets = json_encode($tweets);
+    print_r($tweets);
 
 
 ?>

@@ -74,10 +74,11 @@
                 array_push($all_tweets, $result_array);
             }
 
-            print_r($all_tweets);
+            //print_r($all_tweets);
 
             $count = count($all_tweets);
-            echo "Total number of tweets = ".$count;
+            $return_data = array("tweets"=>$all_tweets, "tweet_count"=>$count);
+            return $return_data;
         }
 
         public function createTweet($tweet_id, $username, $text, $created_at, $sentiment){
