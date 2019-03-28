@@ -2,6 +2,9 @@ $(document).ready(function(){
     
     //set up global functions
     window.currentPage = "overview";
+    window.initialFetchComplete = false;
+    window.scrollInactive = true;
+    window.nextCallInProgress = false;
 
     if(window.currentPage == "overview"){
         initializeOverview();
@@ -10,6 +13,7 @@ $(document).ready(function(){
     }else if(window.currentPage == "about"){
 
     }
+
 });
 
 function initializeOverview(){
@@ -38,6 +42,27 @@ function getTweets(){
         },
         error: function(response) {
             console.log("Call to server unsuccessful, response: "+JSON.stringify(response));
+        },
+    });
+}
+
+function getNextTweets(id){
+
+    $.ajax({
+        type: "GET",
+        url: 'http://ec2-18-188-118-137.us-east-2.compute.amazonaws.com/web/api/tweets/next.php',
+        contentType: 'application/json',
+        dataType:'json',
+        data: {'id': id},
+        responseType:'application/json',
+        success: function(response) {
+            window.nextCallInProgress = false;
+            console.log("Call to server to get next tweets successful, response: "+JSON.stringify(response));
+            updateTweetsContainer(response);
+        },
+        error: function(response) {
+            window.nextCallInProgress = false;
+            console.log("Call to server to get next tweets unsuccessful, response: "+JSON.stringify(response));
         },
     });
 }
@@ -78,4 +103,37 @@ function updateTweetsContainer(data){
         
         tweetsContainer.append(element);
    }
+
+   window.initialFetchComplete = true;
+   bindScrollEvent();
+}
+
+function bindScrollEvent(){
+
+    if(window.initialFetchComplete && window.scrollInactive){
+        //event for when user scrolls to bottom of page
+        $(window).scroll(function() {
+            if($(window).scrollTop() + $(window).height() == $(document).height()) {
+
+                if(window.nextCallInProgress){
+                    return false;
+                }else{
+                   prepareNextTweets(); 
+                }
+                
+            }
+        });
+
+        window.scrollInactive = false;
+    }
+}
+
+function prepareNextTweets(){
+    //get last element in tweet container
+    window.nextCallInProgress = true;
+    var tweetsContainer = $('#ov-tweets-container');
+    var bottomTweet = tweetsContainer.children().last();
+    var id = bottomTweet.attr('id');
+    console.log("obtained id: "+id);
+    getNextTweets(id);
 }

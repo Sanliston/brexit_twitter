@@ -59,8 +59,6 @@
 
         public function getAllTweets($limit=50){
 
-            $limit = $limit*2;
-            
             $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ?) sub ORDER BY id DESC");
             $statement->bind_param("i",$limit);
             $statement->execute();
