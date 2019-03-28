@@ -10,18 +10,20 @@
 
     include(__DIR__ . "/../../api/models/tweets_model.php");
     $contents = json_decode(stripslashes($_REQUEST['id']), true);
+    $count = json_decode(stripslashes($_REQUEST['count']), true);
 
     if ($contents){
 
         try{
             $contents = (int) $contents; 
+            $count = (int) $count;
         }catch(Exception $e){
             $message = ["message" => "ERROR: possible cause - Invalid data passed to API"];
             print_r($message);
         }
         
         $model = new TweetsModel();
-        $tweets = $model->getTweetsAfterId($contents);
+        $tweets = $model->getTweetsAfterId($contents, $count);
         $tweets = json_encode($tweets);
         print_r($tweets);
 

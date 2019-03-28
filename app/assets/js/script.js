@@ -53,7 +53,7 @@ function getNextTweets(id){
         url: 'http://ec2-18-188-118-137.us-east-2.compute.amazonaws.com/web/api/tweets/next.php?id='+id,
         contentType: 'application/json',
         dataType:'json',
-        data: {'id': id},
+        data: {'id': id, 'count': 20},
         responseType:'application/json',
         success: function(response) {
             var loadingContainer = $('#loading-animation-container');
