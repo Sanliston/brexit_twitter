@@ -15,7 +15,7 @@
 
         try{
             echo "trying turning data to int";
-            $data = (int) $_POST['id']; 
+            $data = $_POST['id']; 
         }catch(Exception $e){
             $message = ["message" => "ERROR: possible cause - Invalid data passed to API"];
             print_r($message);
