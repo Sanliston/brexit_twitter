@@ -106,8 +106,8 @@ body{
 .loader,
 .loader:after {
   border-radius: 50%;
-  width: 10em;
-  height: 10em;
+  width: 5em;
+  height: 5em;
 }
 .loader {
   margin: 60px auto;
@@ -308,6 +308,12 @@ body{
     padding: 5px;
     padding-top: 20px;
     padding-bottom: 20px;
+}
+
+#loading-animation-container{
+    display: none;
+    align-self: center;
+    transition: 0.3s;
 }
 
 /*=========Statistics CSS - prefixed with st ==========*/

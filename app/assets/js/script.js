@@ -56,12 +56,15 @@ function getNextTweets(id){
         data: {'id': id},
         responseType:'application/json',
         success: function(response) {
+            var loadingContainer = $('#loading-animation-container');
+            loadingContainer.css({'display':'none'});
             window.nextCallInProgress = false;
             console.log("Call to server to get next tweets successful, response: "+JSON.stringify(response));
             updateTweetsContainer(response);
         },
         error: function(response) {
-            $("#ov-tweets-container #ov-loading-animation:last-child").remove()
+            var loadingContainer = $('#loading-animation-container');
+            loadingContainer.css({'display':'none'});
             window.nextCallInProgress = false;
             console.log("Call to server to get next tweets unsuccessful, response: "+JSON.stringify(response));
         },
@@ -119,9 +122,8 @@ function bindScrollEvent(){
                 if(window.nextCallInProgress){
                     return false;
                 }else{
-                    var tweetsContainer = $('#ov-tweets-container');
-                    var animatedElement = '<div id="ov-loading-animation" class="loader"></div>';
-                    tweetsContainer.append(animatedElement);
+                    var loadingContainer = $('#loading-animation-container');
+                    loadingContainer.css({'display':'flex'});
                     prepareNextTweets(); 
                 }
                 

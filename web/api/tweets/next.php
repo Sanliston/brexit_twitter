@@ -11,8 +11,11 @@
 
     if (isset($_POST['id'])){
 
+        echo "post_id is set";
+
         try{
-           $data = (int) $_POST['id']; 
+            echo "trying turning data to int";
+            $data = (int) $_POST['id']; 
         }catch(Exception $e){
             $message = ["message" => "ERROR: possible cause - Invalid data passed to API"];
             print_r($message);
