@@ -85,7 +85,7 @@
             //The older the tweet, the smaller the id value.
             //TODO: Test this
             
-            $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." WHERE `id` > ? ORDER BY id DESC LIMIT ?");
+            $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." WHERE `id` < ? ORDER BY id DESC LIMIT ?");
             $statement->bind_param("ii",$id, $limit);
             $statement->execute();
             $result = $statement->get_result();
