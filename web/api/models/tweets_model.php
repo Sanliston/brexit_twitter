@@ -80,7 +80,7 @@
             return $return_data;
         }
 
-        public function getTweetsAfterId($id=200, $limit=20){
+        public function getTweetsAfterId($id, $limit=20){
             //This gets $amount of tweets following the given id, by descending order. As new tweets have an incremental id value.
             //The older the tweet, the smaller the id value.
             //TODO: Test this

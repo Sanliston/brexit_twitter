@@ -10,7 +10,8 @@
 
     include(__DIR__ . "/../../api/models/tweets_model.php");
     $contents = json_decode(stripslashes($_REQUEST['id']), true);
-    $count = json_decode(stripslashes($_REQUEST['count']), true);
+    //$count = json_decode(stripslashes($_REQUEST['count']), true);
+    $count = 25;
 
     if ($contents){
 
