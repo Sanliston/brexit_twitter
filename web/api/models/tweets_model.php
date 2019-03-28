@@ -61,7 +61,33 @@
 
             $limit = $limit*2;
             
-            $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ".$limit.") sub ORDER BY id ASC");
+            $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ".$limit.") sub ORDER BY id DESC");
+            $statement->execute();
+            $result = $statement->get_result();
+            $statement->close();
+
+            $all_tweets = array();
+            while($row = $result->fetch_array(MYSQLI_NUM)){
+
+                $result_array = $result->fetch_assoc();
+                //print_r($result_array);
+                array_push($all_tweets, $result_array);
+            }
+
+            //print_r($all_tweets);
+
+            $count = count($all_tweets);
+            $return_data = array("tweets"=>$all_tweets, "tweet_count"=>$count);
+            return $return_data;
+        }
+
+        public function getTweetsAfterId($id, $limit){
+            //This gets $amount of tweets following the given id, by descending order. As new tweets have an incremental id value.
+            //The older the tweet, the smaller the id value.
+            //TODO: Test this
+            $limit = $limit*2;
+            
+            $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." WHERE `id` > ? sub ORDER BY id DESC LIMIT ".$limit);
             $statement->execute();
             $result = $statement->get_result();
             $statement->close();

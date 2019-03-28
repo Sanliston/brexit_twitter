@@ -3,14 +3,153 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    max-width: 99vw;
+    max-width: 100vw;
     margin: 0px;
-    height: 100vh;
+    padding: 0px;
+    min-height: 1500px;
+    height: auto;
+    background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
 
-#main-background{
+#persistent-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
+    height: 80px;
+    z-index: 60;
+    position: fixed;
+}
+
+.persistent-header-inactive{
+    color: white;
+    background: transparent;
+}
+
+.persistent-header-active{
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.21),
+            0 5px 15px 0 rgba(0,0,0,0.18);
+    background: white;
+    color: black;
+}
+
+#persistent-header-title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 20px;
+    align-items: center;
+    width: 20%;
     height: 100%;
+}
+
+#persistent-header-title-logo{
+    font-size: 30px;
+}
+
+#persistent-header-title-text{
+    margin-left: 20px;
+}
+
+#persistent-header-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+    height: 100%;
+    font-weight: bold;
+}
+
+.header-option-bar{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+    flex-grow: 1;
+}
+
+.header-option-highlight{
+    border-radius: 30px;
+    height: 4px;
+    width: 0%;
+    margin-top: 10px;
+    transition: 0.5s;
+}
+
+.header-option-highlight-inactive{
+    background: white
+}
+
+.header-option-highlight-active{
+    background: black;
+}
+
+.header-option-bar:hover .header-option-highlight {
+    max-width: 150px;
+    width: 80%;
+}   
+
+#page-content{
+    width: 100%;
+}
+
+/* ========Loader animation ======*/
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #ffffff;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/*=========Overview CSS - prefixed with ov ================= */
+
+#ov-main-banner{
+    width: 100%;
+    height: 70vh;
     background-image: url(../img/wheat.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -18,6 +157,8 @@ body{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.31),
+    0 5px 15px 0 rgba(0,0,0,0.28);
 }
 
 #title-container{
@@ -76,3 +217,103 @@ body{
     text-decoration: none;
     color: white;
 }
+
+#ov-latest-tweets-title{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 120px;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 20px;
+}
+
+#ov-latest-tweets-title-text{
+    width: auto;
+    font-size: 30px;
+    font-weight: bold;
+    padding:10px;
+}
+
+#ov-latest-tweets-notification{
+    padding: 15px;
+    border-radius: 50px;
+    background: transparent;
+    border: 2px solid white;
+    font-weight: bold; 
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#ov-latest-tweets-notification:hover{
+    background: white;
+    color: black;
+}
+
+#ov-tweets-container{
+    width: 100%;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.ov-tweet-element{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 100px;
+    width: 50%;
+    border-radius: 10px;
+    background: white;
+    color: black;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.32),
+            0 2px 4px 0 rgba(0,0,0,0.28);
+}
+
+.ov-tweet-element-header{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    height: 30px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid #EAEAEA;
+    color: #A0A0A0;
+    font-weight: lighter;
+}
+
+.ov-tweet-element-username{
+}
+
+.ov-tweet-element-sentiment-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 150px;
+}
+
+.ov-tweet-element-sentiment{
+    font-size: 36px;
+}
+
+.ov-tweet-element-content{
+    width: 90%;
+    padding: 5px;
+}
+
+/*=========Statistics CSS - prefixed with st ==========*/
+
+
+
+
+/*========About CSS - prefixed with ab ===========/
+
+
+
+/*==========Media Query Mobiles ==========*/

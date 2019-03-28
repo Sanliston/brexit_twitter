@@ -4,30 +4,99 @@
         <meta charset="UTF-8">
         <title>Brexit Twitter</title>
         <link rel="stylesheet" type="text/css" href="app/assets/css/styles.css">
-        <script src="app/assets/js/script.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="app/assets/js/script.js"></script>
     </head>
 
     <body>
-        <div id="main-background"> 
-            <div id="title-container">
-                <span id="title-text">
-                    Brexit Twitter
-                </span>
 
-                <span id="title-subtext">
-                    Currently work in progress
-                </span>
+        <!--This will be fixed, and background will initially be transparent, and become solid when user scrolls-->
+        <div id="persistent-header" class="persistent-header-active">
+            <div id="persistent-header-title">
+                <i id="persistent-header-title-logo" class="material-icons">wb_cloudy</i>
+                <span id="persistent-header-title-text"> Brexit Twitter</span>
+            </div>
 
-                <a id="endpoint-button" href="http://ec2-18-188-118-137.us-east-2.compute.amazonaws.com/web/api/tweets/read.php">
-                    <span>
-                        View API endpoint
-                    </span>
+            <div id="persistent-header-options">
+                <div class="header-option-bar" id="overview-option-bar">
+                    <span class="header-option-text">Overview</span>
+                    <div class="header-option-highlight header-option-highlight-active"></div>
+                </div>
 
-                </a>
+                <div class="header-option-bar" id="statistics-header-bar">
+                    <span class="header-option-text">Statistics</span>
+                    <div class="header-option-highlight header-option-highlight-active"></div>
+                </div>
 
+                <div class="header-option-bar" id="about-header-bar">
+                    <span class="header-option-text">About</span>
+                    <div class="header-option-highlight header-option-highlight-active"></div>
+                </div>  
             </div>
         </div>
+
+        <!--The content of this div will be changed when the header-options are clicked. The current html inside is for the overview page-->
+        <div id="page-content">
+
+            <div id="ov-main-banner"> 
+                <div id="title-container">
+                    <span id="title-text">
+                        Brexit Twitter
+                    </span>
+
+                    <span id="title-subtext">
+                        Currently work in progress
+                    </span>
+
+                    <a id="endpoint-button" href="http://ec2-18-188-118-137.us-east-2.compute.amazonaws.com/web/api/tweets/read.php">
+                        <span>
+                            View API endpoint
+                        </span>
+
+                    </a>
+
+                </div>
+            </div>
+
+            <div id="ov-latest-tweets-title">
+                <span id="ov-latest-tweets-title-text">Latest Brexit Tweets</span>
+
+                <!--When this is clicked, new tweets are loaded from the server-->
+                <div id="ov-latest-tweets-notification">
+                    <span id="ov-latest-tweets-notification-count">80</span>
+                    <span id="ov-latest-tweets-notification-text">new tweets!</span>
+                </div>
+            </div>
+
+            <div id="ov-tweets-container">
+
+                <!--This appears when the AJAX call to server is being made-->
+                <div id="ov-loading-animation" class="loader">
+
+                </div>
+
+                <div class="ov-tweet-element">
+                    <div class="ov-tweet-element-header">
+                        <span class="ov-tweet-element-username">Username@Test</span>
+                        <div class="ov-tweet-element-sentiment-container">
+                            <span>Sentiment: </span>
+                            <i class="material-icons ov-tweet-element-sentiment" style="font-size: 32px;">sentiment_satisfied</i>
+                        </div>
+                    </div>
+
+                    <span class="ov-tweet-element-content">
+                        Example tweet
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        
 
     </body>
 </html>
