@@ -80,11 +80,10 @@
             return $return_data;
         }
 
-        public function getTweetsAfterId($id=200, $limit=10){
+        public function getTweetsAfterId($id=200, $limit=20){
             //This gets $amount of tweets following the given id, by descending order. As new tweets have an incremental id value.
             //The older the tweet, the smaller the id value.
             //TODO: Test this
-            $limit = $limit*2;
             
             $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." WHERE `id` > ? ORDER BY id DESC LIMIT ?");
             $statement->bind_param("ii",$id, $limit);
