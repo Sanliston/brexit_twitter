@@ -40,7 +40,7 @@ class Tweet {
     }
 
     private function analyseTweet($full_text){
-
+        
     }
 
     function save(){

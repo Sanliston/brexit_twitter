@@ -61,15 +61,16 @@
 
             $limit = $limit*2;
             
-            $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ".$limit.") sub ORDER BY id DESC");
+            $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ?) sub ORDER BY id DESC");
+            $statement->bind_param("i",$limit);
             $statement->execute();
             $result = $statement->get_result();
             $statement->close();
 
             $all_tweets = array();
-            while($row = $result->fetch_array(MYSQLI_NUM)){
+            while($row = $result->fetch_assoc()){
 
-                $result_array = $result->fetch_assoc();
+                $result_array = $row;
                 //print_r($result_array);
                 array_push($all_tweets, $result_array);
             }
@@ -81,21 +82,22 @@
             return $return_data;
         }
 
-        public function getTweetsAfterId($id, $limit){
+        public function getTweetsAfterId($id=200, $limit=10){
             //This gets $amount of tweets following the given id, by descending order. As new tweets have an incremental id value.
             //The older the tweet, the smaller the id value.
             //TODO: Test this
             $limit = $limit*2;
             
-            $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." WHERE `id` > ? sub ORDER BY id DESC LIMIT ".$limit);
+            $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." WHERE `id` > ? ORDER BY id DESC LIMIT ?");
+            $statement->bind_param("ii",$id, $limit);
             $statement->execute();
             $result = $statement->get_result();
             $statement->close();
 
             $all_tweets = array();
-            while($row = $result->fetch_array(MYSQLI_NUM)){
+            while($row = $result->fetch_assoc()){
 
-                $result_array = $result->fetch_assoc();
+                $result_array = $row;
                 //print_r($result_array);
                 array_push($all_tweets, $result_array);
             }
@@ -104,6 +106,8 @@
 
             $count = count($all_tweets);
             $return_data = array("tweets"=>$all_tweets, "tweet_count"=>$count);
+
+            //print_r($return_data, true);
             return $return_data;
         }
 
@@ -135,6 +139,5 @@
         }
 
     }
-
 
 ?>

@@ -9,7 +9,7 @@
     include(__DIR__ . "/../../api/models/tweets_model.php");
 
     $model = new TweetsModel();
-    $tweets = $model->getAllTweets(100);
+    $tweets = $model->getAllTweets(25);
     $tweets = json_encode($tweets);
     print_r($tweets);
 
