@@ -7,7 +7,7 @@
 
     try{
         $template = file_get_contents(__DIR__."/../../../app/views/overview.html");
-        $data = ["data"=>$template];
+        $data = ["data"=>"hello"];
         $data = json_encode($data);
         print_r($data);
     }catch(Exception $e){
