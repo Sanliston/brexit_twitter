@@ -59,7 +59,7 @@ function initiateUpdateScript(){
         // I know that the server updates every 2 minutes, so instead of calling for updates and loading too many tweets, I inform the user. 
         $('#ov-latest-tweets-notification').css({'display':'flex'});
 
-    }, 60 * 2000); 
+    }, 60 * 1000); 
 }
 
 function terminateUpdateScript(){
@@ -75,7 +75,7 @@ function getPage(page = "overview"){
         dataType:'json',
         responseType:'application/json',
         success: function(response) {
-          console.log("Call to server successful, response: "+JSON.stringify(response));
+          //console.log("Call to server successful, response: "+JSON.stringify(response));
           displayPage(response);
         },
         error: function(response) {
@@ -118,7 +118,7 @@ function getTweets(){
         dataType:'json',
         responseType:'application/json',
         success: function(response) {
-          console.log("Call to server successful, response: "+JSON.stringify(response));
+          //console.log("Call to server successful, response: "+JSON.stringify(response));
           populateTweetsContainer(response);
         },
         error: function(response) {
@@ -144,7 +144,7 @@ function getNextTweets(id){
             var loadingContainer = $('#loading-animation-container');
             loadingContainer.css({'display':'none'});
             window.nextCallInProgress = false;
-            console.log("Call to server to get next tweets successful, response: "+JSON.stringify(response));
+            //console.log("Call to server to get next tweets successful, response: "+JSON.stringify(response));
             addToTweetsContainer(response);
         },
         error: function(response) {
@@ -162,7 +162,7 @@ function getOverallSentiment(){
         dataType:'json',
         responseType:'application/json',
         success: function(response) {
-          console.log("Call to server successful, response: "+JSON.stringify(response));
+          //console.log("Call to server successful, response: "+JSON.stringify(response));
           populateOverallSentiment(response);
         },
         error: function(response) {
@@ -284,6 +284,10 @@ function populateTweetsContainer(data){
                             '<span class="ov-tweet-element-content">'+
                                 text+
                             '</span>'+
+                            '<div class="ov-tweet-element-date-container">'+
+                                '<span class="ov-tweet-element-date-text"> Date: </span>'+
+                                '<span class="ov-tweet-element-date">'+tweet['created_at']+'</span>'+
+                            '</div>'+
                         '</div>';
         
         tweetsContainer.append(element);
@@ -324,6 +328,10 @@ function addToTweetsContainer(data){
                              '<span class="ov-tweet-element-content">'+
                                  text+
                              '</span>'+
+                             '<div class="ov-tweet-element-date-container">'+
+                                 '<span class="ov-tweet-element-date-text"> Date: </span>'+
+                                 '<span class="ov-tweet-element-date">'+tweet['created_at']+'</span>'+
+                             '</div>'+
                          '</div>';
          
          tweetsContainer.append(element);
@@ -340,7 +348,7 @@ function bindScrollEvent(){
             if($(window).scrollTop() + $(window).height() == $(document).height()) {
 
                 if(window.nextCallInProgress || window.updateInProgress || window.currentPage != "overview"){
-                    console.log('Next tweets update cancelled');
+                    //console.log('Next tweets update cancelled');
                     return false;
                 }else{
                     var loadingContainer = $('#loading-animation-container');
@@ -368,7 +376,7 @@ function prepareNextTweets(){
     var bottomTweet = tweetsContainer.children().last();
     var id = bottomTweet.attr('id');
 
-    console.log("obtained id: "+id);
+    //console.log("obtained id: "+id);
     getNextTweets(id);
 }
 
