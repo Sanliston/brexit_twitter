@@ -6,14 +6,15 @@
     header('Access-Control-Allow-Methods: GET');
     header('Access-Control-Allow-Headers: Origin, Content-Type');
 
-    include(__DIR__ . "/../../api/models/tweets_model.php");
+    include(__DIR__ . "/../../api/models/analysis_model.php");
     include(__DIR__ . "/../../Logs/Log.php");
 
     try{
-        $model = new TweetsModel();
-        $tweets = $model->getAllTweets(25);
-        $tweets = json_encode($tweets);
-        print_r($tweets);
+        $model = new AnalysisModel();
+        $entries = $model->getAllEntries(10000);
+        $entries = json_encode($entries);
+        LogServer(" analysis read API call");
+        print_r($entries);
     }catch(Exception $e){
         LogError($e->message);
         $message = ["message" => "ERROR: unable to perform request"];
