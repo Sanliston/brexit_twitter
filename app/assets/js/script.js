@@ -43,6 +43,7 @@ function initializeOverview(){
     getTweets();
     getOverallSentiment();
     bindScrollEvent();
+    initiateUpdateScript();
 }
 
 function initializeStatistics(){
@@ -51,6 +52,18 @@ function initializeStatistics(){
 
 function initializeAbout(){
 
+}
+
+function initiateUpdateScript(){
+    window.updateScript = setInterval(function() {
+        // I know that the server updates every 2 minutes, so instead of calling for updates and loading too many tweets, I inform the user. 
+        $('#ov-latest-tweets-notification').css({'display':'flex'});
+
+    }, 60 * 2000); 
+}
+
+function terminateUpdateScript(){
+    clearInterval(window.updateScript);
 }
 
 function getPage(page = "overview"){
@@ -82,9 +95,11 @@ function displayPage(data){
         initializeOverview();
         globalContainer.attr('class', 'global-container-overview');
     }else if(window.currentPage == "statistics"){
+        terminateUpdateScript();
         initializeStatistics();
         globalContainer.attr('class', 'global-container-statistics');
     }else if(window.currentPage == "about"){
+        terminateUpdateScript();
         initializeAbout();
         globalContainer.attr('class', 'global-container-about');
     }
