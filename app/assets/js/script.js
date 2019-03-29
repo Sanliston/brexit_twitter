@@ -7,7 +7,14 @@ $(document).ready(function(){
     window.nextCallInProgress = false;
     window.updateInProgress = false;
 
-    goToPage("overview");
+    //data
+    window.positiveTweetsPercentage = 0;
+    window.neutralTweetsPercentage = 0;
+    window.negativeTweetsPercentage = 0;
+    window.totalTweets = 0;
+    window.overallSentiment = "Neutral";
+
+    //goToPage("overview");
 
 
 });
@@ -39,7 +46,7 @@ function initializeOverview(){
 }
 
 function initializeStatistics(){
-
+    getOverallSentiment();
 }
 
 function initializeAbout(){
@@ -69,17 +76,25 @@ function displayPage(data){
     var pageContent = $('#page-content');
     pageContent.html('');
     pageContent.append(data['data']);
+    var globalContainer = $('#global-container');
 
     if(window.currentPage == "overview"){
         initializeOverview();
+        globalContainer.attr('class', 'global-container-overview');
     }else if(window.currentPage == "statistics"){
         initializeStatistics();
+        globalContainer.attr('class', 'global-container-statistics');
     }else if(window.currentPage == "about"){
         initializeAbout();
+        globalContainer.attr('class', 'global-container-about');
     }
 }
 
 function getTweets(){
+
+    if(window.currentPage != "overview"){
+        return;
+    }
 
     $.ajax({
         type: "GET",
@@ -98,6 +113,10 @@ function getTweets(){
 }
 
 function getNextTweets(id){
+
+    if(window.currentPage != "overview"){
+        return;
+    }
 
     $.ajax({
         type: "POST",
@@ -151,6 +170,17 @@ function populateOverallSentiment(data){
     }
 
     sentimentText.text(result.overallSentiment);
+
+    if(window.currentPage == "statistics"){
+        populateStatistics();
+    }
+}
+
+function populateStatistics(){
+    $('#total-tweets-numbers-value').text(window.totalTweets);
+    $('#positive-tweets-percentage').text(window.positiveTweetsPercentage + "%");
+    $('#neutral-tweets-percentage').text(window.negativeTweetsPercentage + "%");
+    $('#negative-tweets-percentage').text(window.negativeTweetsPercentage + "%");
 }
 
 function calculateOverallSentiment(data){
@@ -197,6 +227,12 @@ function calculateOverallSentiment(data){
         percentageNeutral: percentageNeutral,
         totalTweets: totalTweets
     };
+
+    window.positiveTweetsPercentage = percentagePositive;
+    window.neutralTweetsPercentage = percentageNeutral;
+    window.negativeTweetsPercentage = percentageNegative;
+    window.totalTweets = totalTweets;
+    window.overallSentiment = overallSentiment;
 
     return result;
 }   
@@ -288,8 +324,8 @@ function bindScrollEvent(){
         $(window).scroll(function() {
             if($(window).scrollTop() + $(window).height() == $(document).height()) {
 
-                if(window.nextCallInProgress || window.updateInProgress){
-                    console.log('Update in progress.');
+                if(window.nextCallInProgress || window.updateInProgress || window.currentPage != "overview"){
+                    console.log('Next tweets update cancelled');
                     return false;
                 }else{
                     var loadingContainer = $('#loading-animation-container');
