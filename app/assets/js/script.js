@@ -12,17 +12,22 @@ $(document).ready(function(){
 
 });
 
+function pageHandler(element){
+    var page = $(element).attr('id');
+
+    goToPage(page);
+}
+
 function goToPage(page){
 
     window.currentPage = page;
-    if(page =="overview"){
-        
-        getPage(page);
-    }else if(page == "statistics"){
+    getPage(page);
 
-    }else if(page == "about"){
+    //remove class for all highlights
+    $('.header-option-highlight').removeClass('header-option-highlight-selected');
 
-    }
+    //place class on selected highlight
+    $('#'+page).find('.header-option-highlight').addClass('header-option-highlight-selected');
 
 }
 
@@ -59,7 +64,11 @@ function getPage(page = "overview"){
     });
 }
 
-function displayPage(){
+function displayPage(data){
+
+    var pageContent = $('#page-content');
+    pageContent.html('');
+    pageContent.append(data['data']);
 
     if(window.currentPage == "overview"){
         initializeOverview();

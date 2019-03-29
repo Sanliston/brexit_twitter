@@ -94,6 +94,11 @@ body{
     background: black;
 }
 
+.header-option-highlight-selected{
+    max-width: 150px;
+    width: 80%;
+}
+
 .header-option-bar:hover .header-option-highlight {
     max-width: 150px;
     width: 80%;
