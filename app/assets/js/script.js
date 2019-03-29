@@ -179,7 +179,7 @@ function populateOverallSentiment(data){
 function populateStatistics(){
     $('#total-tweets-numbers-value').text(window.totalTweets);
     $('#positive-tweets-percentage').text(window.positiveTweetsPercentage + "%");
-    $('#neutral-tweets-percentage').text(window.negativeTweetsPercentage + "%");
+    $('#neutral-tweets-percentage').text(window.neutralTweetsPercentage + "%");
     $('#negative-tweets-percentage').text(window.negativeTweetsPercentage + "%");
 }
 
@@ -228,9 +228,9 @@ function calculateOverallSentiment(data){
         totalTweets: totalTweets
     };
 
-    window.positiveTweetsPercentage = percentagePositive;
-    window.neutralTweetsPercentage = percentageNeutral;
-    window.negativeTweetsPercentage = percentageNegative;
+    window.positiveTweetsPercentage = parseFloat(Math.round(percentagePositive * 100) / 100).toFixed(2);
+    window.neutralTweetsPercentage = parseFloat(Math.round(percentageNeutral * 100) / 100).toFixed(2);
+    window.negativeTweetsPercentage = parseFloat(Math.round(percentageNegative * 100) / 100).toFixed(2);
     window.totalTweets = totalTweets;
     window.overallSentiment = overallSentiment;
 
