@@ -360,6 +360,11 @@ body{
     0 5px 15px 0 rgba(0,0,0,0.28);
 }
 
+#ot-overall-sentiment-icon{
+    font-size: 120px;
+    margin: 20px;
+}
+
 #st-tweets-statistics-container{
     width: 100%;
     transition: 0.3s;

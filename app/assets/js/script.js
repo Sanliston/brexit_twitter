@@ -14,7 +14,7 @@ $(document).ready(function(){
     window.totalTweets = 0;
     window.overallSentiment = "Neutral";
 
-    //goToPage("overview");
+    goToPage("overview");
 
 
 });
