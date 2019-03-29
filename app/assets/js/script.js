@@ -201,7 +201,7 @@ function calculateOverallSentiment(data){
         totalTweets = totalTweets + tweetsCount;
         totalPositiveTweets = totalPositiveTweets+positiveTweets;
         totalNegativeTweets = totalNegativeTweets+negativeTweets;
-        totalNeutralTweets = totalNeutralTweets+negativeTweets;
+        totalNeutralTweets = totalNeutralTweets+neutralTweets;
 
     }
 
