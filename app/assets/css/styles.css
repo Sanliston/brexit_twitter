@@ -486,4 +486,44 @@ body{
     max-width: 80%;
 }
 
-/*==========Media Query Mobiles ==========*/
+/*==========Media Query ==========*/
+  
+  /* 
+    ##Device = Most of the Smartphones Mobiles (Portrait)
+    ##Screen = B/w 320px to 479px
+  */
+  
+  @media (min-width: 320px) and (max-width: 480px) {
+    
+    #persistent-header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        min-height: 140px;
+        z-index: 60;
+        position: fixed;
+        transition: 0.25s;
+    }
+
+    #persistent-header-title-logo{
+        font-size: 40px;
+    }
+
+    .ov-tweet-element{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        min-height: 100px;
+        width: 80%;
+        border-radius: 10px;
+        background: white;
+        color: black;
+        margin: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.32),
+                0 2px 4px 0 rgba(0,0,0,0.28);
+    }
+    
+  }
