@@ -7,15 +7,24 @@ $(document).ready(function(){
     window.nextCallInProgress = false;
     window.updateInProgress = false;
 
-    if(window.currentPage == "overview"){
-        initializeOverview();
-    }else if(window.currentPage == "statistics"){
+    goToPage("overview");
 
-    }else if(window.currentPage == "about"){
+
+});
+
+function goToPage(page){
+
+    window.currentPage = page;
+    if(page =="overview"){
+        
+        getPage(page);
+    }else if(page == "statistics"){
+
+    }else if(page == "about"){
 
     }
 
-});
+}
 
 function initializeOverview(){
     window.updateInProgress = true;
@@ -30,6 +39,35 @@ function initializeStatistics(){
 
 function initializeAbout(){
 
+}
+
+function getPage(page = "overview"){
+
+    $.ajax({
+        type: "GET",
+        url: 'http://ec2-18-188-118-137.us-east-2.compute.amazonaws.com/web/api/pages/'+page+'.php',
+        contentType: 'application/json',
+        dataType:'json',
+        responseType:'application/json',
+        success: function(response) {
+          console.log("Call to server successful, response: "+JSON.stringify(response));
+          displayPage(response);
+        },
+        error: function(response) {
+            console.log("ERROR: Call to server unsuccessful, response: "+JSON.stringify(response));
+        },
+    });
+}
+
+function displayPage(){
+
+    if(window.currentPage == "overview"){
+        initializeOverview();
+    }else if(window.currentPage == "statistics"){
+        initializeStatistics();
+    }else if(window.currentPage == "about"){
+        initializeAbout();
+    }
 }
 
 function getTweets(){

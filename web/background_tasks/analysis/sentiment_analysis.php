@@ -14,7 +14,7 @@
             $this->total_word_count = str_word_count($text, 0, '0..9');
             $this->positive_word_count = $this->getWordCount($text, __DIR__."/positive_words.txt", 1);
             $this->negative_word_count = $this->getWordCount($text, __DIR__."/negative_words.txt", 1);
-            $this->very_bad_word_count = $this->getWordCount($text, __DIR__."/very_bad_words.txt", 2);
+            $this->very_bad_word_count = $this->getWordCount($text, __DIR__."/very_bad_words.txt", 1.5);
             $this->evaluateSentiment();
         }
 

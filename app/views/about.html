@@ -1,0 +1,60 @@
+<div id="ov-main-banner"> 
+        <div id="title-container">
+            <span id="title-text">
+                About
+            </span>
+
+            <div id="ov-overall-sentiment-container">
+                
+                <i class="material-icons" id="ov-overall-sentiment-icon">sentiment_satisfied</i>
+
+                <div id="ov-sentiment-text-container">
+                    <span id="ov-sentiment-text"> Overall Sentiment: </span>
+                    <span id="ov-sentiment-value"> neutral</span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="ov-latest-tweets-title">
+        <span id="ov-latest-tweets-title-text">Latest Brexit Tweets</span>
+
+        <!--When this is clicked, new tweets are loaded from the server-->
+        <div id="ov-latest-tweets-notification" onclick="latestTweetsHandler(this)">
+            <span id="ov-latest-tweets-notification-count">80</span>
+            <span id="ov-latest-tweets-notification-text">new tweets!</span>
+        </div>
+    </div>
+
+    <div id="ov-tweets-container">
+
+        <!--This appears when the AJAX call to server is being made-->
+        <div id="ov-loading-animation" class="loader">
+
+        </div>
+
+        <div class="ov-tweet-element">
+            <div class="ov-tweet-element-header">
+                <span class="ov-tweet-element-username">Username@Test</span>
+                <div class="ov-tweet-element-sentiment-container">
+                    <span>Sentiment: </span>
+                    <i class="material-icons ov-tweet-element-sentiment" style="font-size: 32px;">sentiment_satisfied</i>
+                </div>
+            </div>
+
+            <span class="ov-tweet-element-content">
+                Example tweet
+            </span>
+
+        </div>
+
+    </div>
+
+    <div id="loading-animation-container">
+
+        <div class="loader">
+
+        </div>
+    </div>
