@@ -5,6 +5,7 @@ $(document).ready(function(){
     window.initialFetchComplete = false;
     window.scrollInactive = true;
     window.nextCallInProgress = false;
+    window.updateInProgress = false;
 
     if(window.currentPage == "overview"){
         initializeOverview();
@@ -17,7 +18,9 @@ $(document).ready(function(){
 });
 
 function initializeOverview(){
+    window.updateInProgress = true;
     getTweets();
+    bindScrollEvent();
 }
 
 function initializeStatistics(){
@@ -60,7 +63,7 @@ function getNextTweets(id){
             loadingContainer.css({'display':'none'});
             window.nextCallInProgress = false;
             console.log("Call to server to get next tweets successful, response: "+JSON.stringify(response));
-            updateTweetsContainer(response);
+            addToTweetsContainer(response);
         },
         error: function(response) {
             window.nextCallInProgress = false;
@@ -107,10 +110,10 @@ function populateTweetsContainer(data){
    }
 
    window.initialFetchComplete = true;
-   bindScrollEvent();
+   window.updateInProgress = false;
 }
 
-function updateTweetsContainer(data){
+function addToTweetsContainer(data){
     var tweetsArray =  data['tweets'];
  
     //iterate through tweets and insert into tweets container
@@ -151,12 +154,13 @@ function updateTweetsContainer(data){
 
 function bindScrollEvent(){
 
-    if(window.initialFetchComplete && window.scrollInactive){
+    if(window.scrollInactive){
         //event for when user scrolls to bottom of page
         $(window).scroll(function() {
             if($(window).scrollTop() + $(window).height() == $(document).height()) {
 
-                if(window.nextCallInProgress){
+                if(window.nextCallInProgress || window.updateInProgress){
+                    console.log('Update in progress.');
                     return false;
                 }else{
                     var loadingContainer = $('#loading-animation-container');
@@ -164,6 +168,12 @@ function bindScrollEvent(){
                     prepareNextTweets(); 
                 }
                 
+            }else if($(window).scrollTop() > 0){
+                //for header
+                toggleHeader("active");
+
+            }else{
+                toggleHeader("inactive");
             }
         });
 
@@ -180,4 +190,49 @@ function prepareNextTweets(){
 
     console.log("obtained id: "+id);
     getNextTweets(id);
+}
+
+function latestTweetsHandler(button){
+    window.updateInProgress = true;
+    $(button).css({'display': 'none'});
+    var tweetsContainer = $('#ov-tweets-container');
+   tweetsContainer.html('');
+   var loaderElement = '<div id="ov-loading-animation" class="loader"></div>';
+   tweetsContainer.html(loaderElement);
+    getTweets();
+}
+
+function toggleHeader(state){
+
+    var header = $('#persistent-header');
+    var headerOptionHighlight = $('.header-option-highlight');
+
+    if(state == "inactive"){
+
+        if(header.hasClass('persistent-header-inactive')){
+            return true;
+        }
+
+        //change header class
+        header.removeClass('persistent-header-active');
+        header.addClass('persistent-header-inactive');
+
+        //do same for highlight
+        headerOptionHighlight.removeClass('header-option-highlight-active');
+        headerOptionHighlight.addClass('header-option-highlight-inactive');
+
+    }else if("active"){
+
+        if(header.hasClass('persistent-header-active')){
+            return true;
+        }
+
+        //change header class
+        header.removeClass('persistent-header-inactive');
+        header.addClass('persistent-header-active');
+
+        //do same for highlight
+        headerOptionHighlight.removeClass('header-option-highlight-inactive');
+        headerOptionHighlight.addClass('header-option-highlight-active');
+    }
 }

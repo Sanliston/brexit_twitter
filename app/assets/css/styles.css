@@ -23,6 +23,7 @@ body{
     height: 80px;
     z-index: 60;
     position: fixed;
+    transition: 0.25s;
 }
 
 .persistent-header-inactive{
@@ -108,8 +109,8 @@ body{
     border: 16px solid #f3f3f35d; /* Light grey */
     border-top: 16px solid #ffffff; /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 70px;
+    height: 70px;
     animation: spin 2s linear infinite;
   }
   

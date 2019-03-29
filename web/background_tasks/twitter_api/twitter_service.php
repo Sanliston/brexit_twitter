@@ -1,17 +1,47 @@
 <?php
 include(__DIR__ . "/../../api/models/tweets_model.php");
+include(__DIR__ . "/../analysis/sentiment_analysis.php");
+include(__DIR__ . "/../analysis/overall_analysis.php");
+include(__DIR__ . "/../../Logs/Log.php");
 require_once('twitter_api.php');
 
+try{
+    $twitter_api = new TwitterAPI("brexit", 30, "en");
+    $tweets_array = $twitter_api->makeCall();
+}catch(Exception $e){
+    LogError($e->message);
+}
 
-$twitter_api = new TwitterAPI("brexit", 100, "en");
-$tweets_array = $twitter_api->makeCall();
+
+$overall_sentiment = "neutral";
+$total_tweets = 0;
+$positive_tweets = 0;
+$negative_tweets = 0;
+$neutral_tweets = 0;
 
 foreach( $tweets_array as $tweetElement){
     //echo "\n".$tweetElement["full_text"];
 
+
     $tweet = new Tweet($tweetElement);
+    $sentiment = $tweet->getSentiment();
+
+    if($sentiment == "positive"){
+        $positive_tweets++;
+    }else if($sentiment == "negative"){
+        $negative_tweets++;
+    }else {
+        $neutral_tweets++;
+    }
+
+    $total_tweets++;
+
     $tweet->save();
 }
+
+$overall_analysis = new OverallAnalysis($total_tweets, $positive_tweets, $negative_tweets, $neutral_tweets);
+$overall_analysis->save();
+LogBackground("Tweets successfully fetched.");
 
 class Tweet {
 
@@ -40,7 +70,13 @@ class Tweet {
     }
 
     private function analyseTweet($full_text){
-        
+        $sentiment_analysis = new SentimentAnalysis($full_text);
+        $sentiment = $sentiment_analysis->getSentiment();
+        $this->sentiment = $sentiment;
+    }
+
+    function getSentiment(){
+        return $this->sentiment;
     }
 
     function save(){

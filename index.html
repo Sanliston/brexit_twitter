@@ -13,7 +13,7 @@
     <body>
 
         <!--This will be fixed, and background will initially be transparent, and become solid when user scrolls-->
-        <div id="persistent-header" class="persistent-header-active">
+        <div id="persistent-header" class="persistent-header-inactive">
             <div id="persistent-header-title">
                 <i id="persistent-header-title-logo" class="material-icons">wb_cloudy</i>
                 <span id="persistent-header-title-text"> Brexit Twitter</span>
@@ -22,17 +22,17 @@
             <div id="persistent-header-options">
                 <div class="header-option-bar" id="overview-option-bar">
                     <span class="header-option-text">Overview</span>
-                    <div class="header-option-highlight header-option-highlight-active"></div>
+                    <div class="header-option-highlight header-option-highlight-inactive"></div>
                 </div>
 
                 <div class="header-option-bar" id="statistics-header-bar">
                     <span class="header-option-text">Statistics</span>
-                    <div class="header-option-highlight header-option-highlight-active"></div>
+                    <div class="header-option-highlight header-option-highlight-inactive"></div>
                 </div>
 
                 <div class="header-option-bar" id="about-header-bar">
                     <span class="header-option-text">About</span>
-                    <div class="header-option-highlight header-option-highlight-active"></div>
+                    <div class="header-option-highlight header-option-highlight-inactive"></div>
                 </div>  
             </div>
         </div>
@@ -64,7 +64,7 @@
                 <span id="ov-latest-tweets-title-text">Latest Brexit Tweets</span>
 
                 <!--When this is clicked, new tweets are loaded from the server-->
-                <div id="ov-latest-tweets-notification">
+                <div id="ov-latest-tweets-notification" onclick="latestTweetsHandler(this)">
                     <span id="ov-latest-tweets-notification-count">80</span>
                     <span id="ov-latest-tweets-notification-text">new tweets!</span>
                 </div>

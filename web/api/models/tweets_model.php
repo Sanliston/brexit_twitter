@@ -28,11 +28,7 @@
             $result = $statement->execute();
             $statement->close();
 
-            if($result->num_rows == 0){
-                return false;
-            }else{
-                return true;
-            }
+            return true;
         }
 
         public function deleteTweet($tweet_id){
@@ -115,15 +111,22 @@
             if($this->checkIfExists($tweet_id)){
                 return false;
             }else{
-                $created_at = date("Y-m-d H:i:s", strtotime($created_at));
-                echo "created at value: ".$created_at;
-                $current_time = date("Y-m-d H:i:s");
-                echo "current time value: ".$current_time;
-                $statement = $this->connection->prepare("INSERT INTO ".$this->table_name." (tweet_id, username, text, created_at, sentiment, time_saved) VALUES (?, ?, ?, ?, ?, ?)");
-                $statement->bind_param("sssssb",$tweet_id, $username, $text, $created_at, $sentiment, $current_time);
 
-                $statement->execute(); 
-                $statement->close();
+                try{
+                    $created_at = date("Y-m-d H:i:s", strtotime($created_at));
+                    echo "created at value: ".$created_at;
+                    $current_time = date("Y-m-d H:i:s");
+                    echo "current time value: ".$current_time;
+                    $statement = $this->connection->prepare("INSERT INTO ".$this->table_name." (tweet_id, username, text, created_at, sentiment, time_saved) VALUES (?, ?, ?, ?, ?, ?)");
+                    $statement->bind_param("sssssb",$tweet_id, $username, $text, $created_at, $sentiment, $current_time);
+
+                    $statement->execute(); 
+                    $statement->close();
+                }catch(Exception $e){
+                    LogError($e->message);
+                    return false;
+                }
+                
 
                 return true;
             }
