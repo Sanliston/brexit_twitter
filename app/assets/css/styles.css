@@ -192,6 +192,33 @@ body{
     color: white;
 }
 
+#ov-overall-sentiment-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    transition: 0.3s;
+}
+
+#ov-overall-sentiment-icon{
+    font-size: 120px;
+    margin: 20px;
+}
+
+#ov-sentiment-text-container{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#ov-sentiment-value{
+    margin: 5px;
+}
+
 #ov-latest-tweets-title{
     display: flex;
     flex-direction: column;

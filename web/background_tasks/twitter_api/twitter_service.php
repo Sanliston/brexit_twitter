@@ -6,7 +6,7 @@ include(__DIR__ . "/../../Logs/Log.php");
 require_once('twitter_api.php');
 
 try{
-    $twitter_api = new TwitterAPI("brexit", 30, "en");
+    $twitter_api = new TwitterAPI("brexit", 50, "en");
     $tweets_array = $twitter_api->makeCall();
 }catch(Exception $e){
     LogError($e->message);

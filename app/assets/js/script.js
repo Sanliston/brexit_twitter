@@ -20,6 +20,7 @@ $(document).ready(function(){
 function initializeOverview(){
     window.updateInProgress = true;
     getTweets();
+    getOverallSentiment();
     bindScrollEvent();
 }
 
@@ -71,6 +72,87 @@ function getNextTweets(id){
         },
     });
 }
+
+function getOverallSentiment(){
+    $.ajax({
+        type: "GET",
+        url: 'http://ec2-18-188-118-137.us-east-2.compute.amazonaws.com/web/api/analysis/read.php',
+        contentType: 'application/json',
+        dataType:'json',
+        responseType:'application/json',
+        success: function(response) {
+          console.log("Call to server successful, response: "+JSON.stringify(response));
+          populateOverallSentiment(response);
+        },
+        error: function(response) {
+            console.log("ERROR: Call to server unsuccessful, response: "+JSON.stringify(response));
+        },
+    });
+}
+
+function populateOverallSentiment(data){
+    var result = calculateOverallSentiment(data);
+    var sentimentIcon = $('#ov-overall-sentiment-icon');
+    var sentimentText = $('#ov-sentiment-value');
+
+    if(result.overallSentiment == "Positive"){
+        sentimentIcon.text('sentiment_very_satisfied');
+    }else if(result.overallSentiment == "Negative"){
+        sentimentIcon.text('sentiment_very_dissatisfied');
+    }else{
+        sentimentIcon.text('sentiment_satisfied');
+    }
+
+    sentimentText.text(result.overallSentiment);
+}
+
+function calculateOverallSentiment(data){
+    var entriesArray = data["entries"];
+
+    var totalTweets = 0;
+    var totalPositiveTweets = 0;
+    var totalNegativeTweets = 0;
+    var totalNeutralTweets = 0; 
+
+    for(i in entriesArray){
+        var entry = entriesArray[i];
+        var tweetsCount = entry['total_tweets'];
+        var positiveTweets = entry['positive_tweets'];
+        var negativeTweets = entry['negative_tweets'];
+        var neutralTweets = entry['neutral_tweets'];
+
+        totalTweets = totalTweets + tweetsCount;
+        totalPositiveTweets = totalPositiveTweets+positiveTweets;
+        totalNegativeTweets = totalNegativeTweets+negativeTweets;
+        totalNeutralTweets = totalNeutralTweets+negativeTweets;
+
+    }
+
+    var overallSentiment = "Neutral";
+    var largestValue = Math.max(totalPositiveTweets, totalNegativeTweets, totalNeutralTweets);
+
+    if(largestValue == totalPositiveTweets){
+        overallSentiment = "Positive";
+    }else if(largestValue == totalNegativeTweets){
+        overallSentiment = "Negative";
+    }else{
+        overallSentiment = "Neutral";
+    }
+
+    var percentagePositive = (totalPositiveTweets/totalTweets)*100;
+    var percentageNegative = (totalNegativeTweets/totalTweets)*100;
+    var percentageNeutral = (totalNeutralTweets/totalTweets)*100;
+
+    var result = {
+        overallSentiment: overallSentiment,
+        percentagePositive: percentagePositive,
+        percentageNegative: percentageNegative,
+        percentageNeutral: percentageNeutral,
+        totalTweets: totalTweets
+    };
+
+    return result;
+}   
 
 function populateTweetsContainer(data){
    var tweetsArray =  data['tweets'];
