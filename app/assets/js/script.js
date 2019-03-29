@@ -41,7 +41,7 @@ function getTweets(){
         dataType:'json',
         responseType:'application/json',
         success: function(response) {
-          //console.log("Call to server successful, response: "+JSON.stringify(response));
+          console.log("Call to server successful, response: "+JSON.stringify(response));
           populateTweetsContainer(response);
         },
         error: function(response) {
