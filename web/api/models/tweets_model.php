@@ -28,7 +28,11 @@
             $result = $statement->execute();
             $statement->close();
 
-            return true;
+            if($result->num_rows == 0){
+                return false;
+            }else{
+                return true;
+            }
         }
 
         public function deleteTweet($tweet_id){
@@ -55,7 +59,7 @@
 
         public function getAllTweets($limit=50){
 
-            $statement = $this->connection->prepare("SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ?");
+            $statement = $this->connection->prepare("SELECT * FROM ( SELECT * FROM ".$this->table_name." ORDER BY id DESC LIMIT ?) sub ORDER BY id DESC");
             $statement->bind_param("i",$limit);
             $statement->execute();
             $result = $statement->get_result();
@@ -123,7 +127,6 @@
                     $statement->execute(); 
                     $statement->close();
                 }catch(Exception $e){
-                    LogError($e->message);
                     return false;
                 }
                 
