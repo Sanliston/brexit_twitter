@@ -117,7 +117,7 @@
             }else{
 
                 try{
-                    $created_at = date("Y-m-d H:i:s", strtotime($created_at));
+                    $created_at = new DateTime("now", new DateTimeImmutable("Europe/London"));
                     echo "created at value: ".$created_at;
                     $current_time = date("Y-m-d H:i:s");
                     echo "current time value: ".$current_time;
