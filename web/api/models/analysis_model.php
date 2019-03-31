@@ -104,9 +104,10 @@
 
             try{
                 echo "Create sentiment triggered";
-                $created_at = date("Y-m-d H:i:s");
+                $created_at = new DateTime("now", new DateTimeZone("Europe/London"));
+                $created_at = $created_at->format('Y-m-d H:i:s');
                 $statement = $this->connection->prepare("INSERT INTO ".$this->table_name." (created_at, total_tweets, positive_tweets, negative_tweets, neutral_tweets, average_sentiment) VALUES (?, ?, ?, ?, ?, ?)");
-                $statement->bind_param("biiiis",$created_at, $total_tweets, $positive_tweets, $negative_tweets, $neutral_tweets, $sentiment);
+                $statement->bind_param("siiiis",$created_at, $total_tweets, $positive_tweets, $negative_tweets, $neutral_tweets, $sentiment);
 
                 $statement->execute(); 
                 $statement->close();
