@@ -21,6 +21,8 @@ $positive_tweets = 0;
 $negative_tweets = 0;
 $neutral_tweets = 0;
 
+$tweets_array = array_reverse($tweets_array);
+
 foreach( $tweets_array as $tweetElement){
     //echo "\n".$tweetElement["full_text"];
 
