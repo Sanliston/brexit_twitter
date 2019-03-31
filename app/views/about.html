@@ -23,12 +23,17 @@
         <span id="about-text">
 
             This is a small web application that pulls tweets about Brexit from the Twitter API and performs a simple sentiment analysis on them.
-        Tweets are pulled server side every 2 minutes. Latest tweets can be loaded by clicking the "Load new tweets" button on the Overview Page.
-        The overview page provides a list of the latest tweets and their sentiment rating. The Statistics page provides Overall sentiment rating data for all the Tweets,
-        as well as the percentage distribution of the sentiment rating. 
+        Tweets are pulled server side every minute, via a crontab script that executes a php script. I opted to put a timer on the client side that is congruent with the server side interval for the crontab script,
+        this saves us from executing a call to the server every minute to query if new tweets have been inserted into the database. So every minute the user gets a notification informing them that there are new tweets.
+        This allows the user to control when they load new tweets, instead of it being done automatically, which I felt was intrusive to the UX. <br><br>
+        In general, the overview page provides a list of the latest tweets and their sentiment rating. The Statistics page provides the overall sentiment rating data for all the Tweets,
+        as well as the percentage distribution of each sentiment rating. 
 
-        Due to time constraints, a lot of features could not be implemented. Such as a deeper Sentiment analysis system that also looks at the context of the tweets, robust media queries covering all cases,
-        and a server side cronjob to automatically get tweets in the background.
+        Due to time constraints, a lot of features could not be implemented; such as a deeper Sentiment analysis system that also looks at the context of the tweets, and robust media queries covering all cases. <br> 
+        I also opted to use JQuery for DOM manipulation, due to ease of use and cross-browser compatibility. 
+
+        <br> <br>
+        Thank you for taking the time to look at my website.
         </span>
         
     </div>
