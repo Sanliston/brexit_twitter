@@ -5,6 +5,8 @@ include(__DIR__ . "/../analysis/overall_analysis.php");
 include(__DIR__ . "/../../Logs/Log.php");
 require_once('twitter_api.php');
 
+//date_default_timezone_set('Europe/London');
+
 try{
     $twitter_api = new TwitterAPI("brexit", 50, "en");
     $tweets_array = $twitter_api->makeCall();

@@ -117,8 +117,11 @@
             }else{
 
                 try{
+                    $base_date = new DateTime("now", new DateTimeZone("Europe/London"));
+                    $base_date = $base_date->format('Y-m-d H');
                     $created_at = new DateTime($created_at, new DateTimeZone("Europe/London"));
-                    $created_at = $created_at->format('Y-m-d H:i:s');
+                    $created_at = $created_at->format('i:s');
+                    $created_at = $base_date.":".$created_at;
                     //echo "created at value: ".$created_at;
                     $current_time = date("Y-m-d H:i:s");
                     //echo "current time value: ".$current_time;
