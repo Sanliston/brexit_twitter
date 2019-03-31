@@ -110,17 +110,18 @@
 
         public function createTweet($tweet_id, $username, $text, $created_at, $sentiment){
 
-            echo "Create tweet triggered";
+            //echo "Create tweet triggered";
 
             if($this->checkIfExists($tweet_id)){
                 return false;
             }else{
 
                 try{
-                    $created_at = new DateTime("now", new DateTimeImmutable("Europe/London"));
-                    echo "created at value: ".$created_at;
+                    $created_at = new DateTime("now", new DateTimeZone("Europe/London"));
+                    $created_at = $created_at->format('Y-m-d H:i:s');
+                    //echo "created at value: ".$created_at;
                     $current_time = date("Y-m-d H:i:s");
-                    echo "current time value: ".$current_time;
+                    //echo "current time value: ".$current_time;
                     $statement = $this->connection->prepare("INSERT INTO ".$this->table_name." (tweet_id, username, text, created_at, sentiment, time_saved) VALUES (?, ?, ?, ?, ?, ?)");
                     $statement->bind_param("sssssb",$tweet_id, $username, $text, $created_at, $sentiment, $current_time);
 
